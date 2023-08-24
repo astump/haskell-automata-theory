@@ -24,3 +24,6 @@ instance GvShow Int where
 
 instance GvShow Integer where
   gvshow = show
+
+instance GvShow Bool where
+  gvshow = show

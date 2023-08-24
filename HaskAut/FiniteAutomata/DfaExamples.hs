@@ -6,6 +6,7 @@ module HaskAut.FiniteAutomata.DfaExamples
 import HaskAut.FiniteAutomata.Dfa as Dfa
 import HaskAut.FiniteAutomata.ExampleBasics as ExampleBasics
 import HaskAut.Common.Util as Util
+import HaskAut.FiniteAutomata.DfaOperations as Ops
 
 ---------------------------------------------------------
 -- Example DFA from class 8/23
@@ -94,5 +95,13 @@ s2 = multistep ex2 S0 [B,A,A,A,B]
 accepting2 = accepts ex2 [B,A,A,A,B]
 rejecting2 = accepts ex2 [B,A,A,B,A,B]
 
+----------------------------------------------------------------------
+-- examples using closure operations
 
+star :: AB -> Dfa AB Bool 
+star x = Dfa [True,False] [A,B] delta True [True]
+  where delta True y | x == y = True
+        delta _ _ = False
 
+unionEx :: Dfa AB (Bool, Bool)
+unionEx = Ops.union (star A) (star B)

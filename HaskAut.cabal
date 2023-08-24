@@ -18,6 +18,7 @@ library
   exposed-modules:
     HaskAut.Common.GvShow
     HaskAut.FiniteAutomata.Dfa
+    HaskAut.FiniteAutomata.DfaOperations
     HaskAut.FiniteAutomata.DfaExamples
     HaskAut.FiniteAutomata.ExampleBasics
     HaskAut.Common.Util
