@@ -6,7 +6,7 @@ class GvShow a where
   gvshow :: a -> String
 
 instance (GvShow a, GvShow b) => GvShow (a,b) where
-  gvshow (a, b) = gvshow a ++ "_" ++ gvshow b
+  gvshow (a, b) = "p" ++ gvshow a ++ "_" ++ gvshow b
 
 instance (GvShow b , GvShow a) => GvShow (Either a b) where
   gvshow (Left x) = "l" ++ gvshow x

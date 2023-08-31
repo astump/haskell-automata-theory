@@ -98,10 +98,16 @@ rejecting2 = accepts ex2 [B,A,A,B,A,B]
 ----------------------------------------------------------------------
 -- examples using closure operations
 
-star :: AB -> Dfa AB Bool 
-star x = Dfa [True,False] [A,B] delta True [True]
-  where delta True y | x == y = True
-        delta _ _ = False
+star :: Char -> Dfa Char Int 
+star x = Dfa [0,1] "ab" delta 0 [0]
+  where delta 0 y | x == y = 0
+        delta _ _ = 1
 
-unionEx :: Dfa AB (Bool, Bool)
-unionEx = Ops.union (star A) (star B)
+unionEx :: Dfa Char (Int, Int)
+unionEx = Ops.union (star 'a') (star 'b')
+
+interEx :: Dfa Char (Int, Int)
+interEx = Ops.intersect (star 'a') (star 'b')
+
+compEx :: Dfa Char Int
+compEx = complement (star 'a')
