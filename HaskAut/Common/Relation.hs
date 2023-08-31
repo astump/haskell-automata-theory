@@ -50,3 +50,5 @@ applyRel r s = canonOrd [s'' | (s',s'') <- r , s' == s]
 ec :: Ord state => Rel state -> state -> [state]
 ec = applyRel
 
+intersects :: Eq state => Rel state -> Rel state -> Bool
+intersects r1 r2 = not (null (intersect r1 r2))

@@ -28,7 +28,7 @@ multistep n@(Nfa states _ trans _ _) (c:cs) =
 
 accepts :: Eq state => Nfa input state -> [input] -> Bool
 accepts n@(Nfa _ _ trans start final) str =
-  not ( null ( intersect (multistep n str) [(s,f) | s <- start, f <- final]))
+  intersects (multistep n str) [(s,f) | s <- start, f <- final]
 
 ----------------------------------------------------------------------
 -- show
