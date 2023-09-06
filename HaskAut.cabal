@@ -22,8 +22,12 @@ library
     HaskAut.FiniteAutomata.DfaExamples
     HaskAut.FiniteAutomata.ExampleBasics
     HaskAut.FiniteAutomata.Nfa
+    HaskAut.FiniteAutomata.NfaEpsilon
     HaskAut.FiniteAutomata.NfaExamples
     HaskAut.FiniteAutomata.SubsetConstruction
+    HaskAut.FiniteAutomata.SubsetConstructionEps
+    HaskAut.FiniteAutomata.Regexp
+    HaskAut.FiniteAutomata.RegexpTests    
     HaskAut.Common.Relation    
     HaskAut.Common.Util
   -- other-modules:

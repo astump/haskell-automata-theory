@@ -4,6 +4,7 @@ module HaskAut.FiniteAutomata.DfaOperations where
 import Data.List 
 import HaskAut.FiniteAutomata.Dfa
 import HaskAut.Common.Util
+import HaskAut.Common.Relation as Relation
 
 {- return a DFA whose language is the complement of the language
    of the input DFA. -}
@@ -25,3 +26,40 @@ union (Dfa states1 inputs trans1 start1 final1) (Dfa states2 _ trans2 start2 fin
 intersect :: Dfa input state1 -> Dfa input state2 -> Dfa input (state1, state2)
 intersect (Dfa states1 inputs trans1 start1 final1) (Dfa states2 _ trans2 start2 final2) =
   Dfa (prod states1 states2) inputs (prodTrans trans1 trans2) (start1, start2) (prod final1 final2)
+
+{- equiv should be an equivalence relation respected by the DFA (if you want
+   the languages to be the same)
+-}
+quotient :: Ord state => Dfa input state -> Rel state -> Dfa input [state]
+quotient (Dfa states inputs trans start final) equiv =
+  Dfa (canonOrd [ec equiv q | q <- states])
+    inputs
+    trans'
+    (ec equiv start)
+    (canonOrd [ec equiv f | f <- final])
+  where trans' ss a = canonOrd $ concat $ [ ec equiv (trans s a) | s <- ss ] -- if trans respects equiv, this will be in the set of states
+
+-- compute the coarsest equivalence relation respected by the given DFA
+coarsest :: Ord state => Dfa input state -> Rel state
+coarsest (Dfa states inputs trans start final) =
+  let nonfinal = states \\ final in
+  let init = symmClose [ (s1,s2) | s1 <- nonfinal , s2 <- final ] in
+  let step forbidden = canonOrd (Relation.union forbidden
+                        [ (s1,s2) | s1 <- states ,
+                                    s2 <- states ,
+                                    a <- inputs ,
+                                    elem (trans s1 a, trans s2 a) forbidden ]) in
+    prod states states \\ fixedPoint init step
+
+dropUnreachable :: Ord state => Dfa input state -> Dfa input state
+dropUnreachable (Dfa states inputs trans start final) =
+  let reachable =
+        fixedPoint [start]
+          (\ ss -> canonOrd $ ss ++ [ trans s a | a <- inputs , s <- ss ])
+  in
+    (Dfa reachable inputs trans start (Data.List.intersect final reachable))
+
+minimize :: Ord state => Dfa input state -> Dfa input [state]
+minimize d =
+  let d' = dropUnreachable d in
+    quotient d' (coarsest d')
