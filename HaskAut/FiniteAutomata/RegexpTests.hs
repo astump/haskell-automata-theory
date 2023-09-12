@@ -12,28 +12,22 @@ import HaskAut.Common.GvShow
 import HaskAut.FiniteAutomata.SubsetConstructionEps
 import HaskAut.FiniteAutomata.DfaOperations
 
-data ABC = A | B | C
-  deriving (Show , Eq , Ord, Enum)
-
-instance GvShow ABC where
-  gvshow = show
-
-e1 = Star (Concat (Char A) (Char B))
+e1 = Star (Concat (Char 'a') (Char 'b'))
 
 n1 = toNfa e1
 
 -- A* + A*
-e2 = Or (Star (Char A)) (Star (Char A))
+e2 = Or (Star (Char 'a')) (Star (Char 'a'))
 
 n2 = toNfa e2
 
-e3 = Or (Concat (Char A) (Star (Char B)))
-        (Concat (Char C) (Star (Char B)))
+e3 = Or (Concat (Char 'a') (Star (Char 'b')))
+        (Concat (Char 'c') (Star (Char 'b')))
 
 n3 = toNfa e3
 
 -- (A + BC)*
-e4 = Star (Or (Char A) (Concat (Char B) (Char C)))
+e4 = Star (Or (Char 'a') (Concat (Char 'b') (Char 'c')))
 
 n4 = toNfa e4
 
