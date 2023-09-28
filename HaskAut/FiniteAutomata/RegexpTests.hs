@@ -38,3 +38,7 @@ du4 = dropUnreachable d4
 c4 = coarsest du4
 
 m4 = minimize du4
+
+-- (('a' + 'b') ('c' + 'd'))*
+e5 = Star (Concat (Or (Char 'a') (Char 'b'))
+                  (Or (Char 'c') (Char 'd')))

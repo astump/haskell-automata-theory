@@ -28,8 +28,12 @@ library
     HaskAut.FiniteAutomata.SubsetConstructionEps
     HaskAut.FiniteAutomata.Regexp
     HaskAut.FiniteAutomata.RegexpTests    
+    HaskAut.Grammars.Cfg
+    HaskAut.Grammars.CfgExamples
+    HaskAut.Grammars.ProdTree
     HaskAut.Common.Relation    
     HaskAut.Common.Util
+    
   -- other-modules:
   -- other-extensions:
   build-depends:       base >=4.12, containers >=0.6

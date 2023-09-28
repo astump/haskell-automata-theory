@@ -111,3 +111,11 @@ interEx = Ops.intersect (star 'a') (star 'b')
 
 compEx :: Dfa Char Int
 compEx = complement (star 'a')
+
+-- non-minimal DFA to recognize {a}
+justa :: Dfa Char Int
+justa = Dfa [0,1,2,3] ['a'] delta 0 [1]
+ where delta 0 'a' = 1
+       delta 1 'a' = 2
+       delta 2 'a' = 3
+       delta 3 'a' = 3
