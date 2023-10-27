@@ -7,13 +7,13 @@ import HaskAut.Common.Util
 data Direction = GoLeft | GoRight
 
 instance Show Direction where
-  show GoLeft = "L"
-  show GoRight = "R"
+  show GoLeft = " \\ "
+  show GoRight = " / "
 
 data Trans state tape = Trans state tape Direction state tape 
 
 instance (Show state , Show tape) => Show (Trans state tape) where
-  show (Trans s1 t1 d s2 t2) = show s1 ++ " === " ++ show t1 ++ " / " ++ show t2 ++ " " ++ show d ++ " ===> " ++ show s2
+  show (Trans s1 t1 d s2 t2) = show s1 ++ " === " ++ show t1 ++ show d ++ show t2 ++ " " ++ " ===> " ++ show s2
 
 data TM input state tape = TM {
   states :: [state], -- Q: all states.  
@@ -49,7 +49,7 @@ instance (Show state, Show tape, Eq tape) => Show (Config state tape) where
 data Configs state tape = Configs [Config state tape]
 
 instance (Show state, Show tape, Eq tape) => Show (Configs state tape) where
-  show (Configs cs) = intercalate " | " $ (show <$> cs)
+  show (Configs cs) = intercalate "  " $ (show <$> cs)
 
 data Run state tape = Run [Configs state tape]
 
